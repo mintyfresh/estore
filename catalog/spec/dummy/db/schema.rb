@@ -10,10 +10,22 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_03_04_155041) do
+ActiveRecord::Schema[7.0].define(version: 2022_03_04_155724) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "plpgsql"
+
+  create_table "catalog_products", force: :cascade do |t|
+    t.bigint "vendor_id", null: false
+    t.string "name", null: false
+    t.string "description"
+    t.integer "price_cents", null: false
+    t.string "currency", null: false
+    t.datetime "created_at", default: -> { "now()" }, null: false
+    t.datetime "updated_at", default: -> { "now()" }, null: false
+    t.index ["vendor_id"], name: "index_catalog_products_on_vendor_id"
+    t.check_constraint "price_cents >= 0"
+  end
 
   create_table "catalog_vendors", force: :cascade do |t|
     t.bigint "owner_id", null: false
@@ -31,4 +43,5 @@ ActiveRecord::Schema[7.0].define(version: 2022_03_04_155041) do
     t.datetime "updated_at", default: -> { "now()" }, null: false
   end
 
+  add_foreign_key "catalog_products", "catalog_vendors", column: "vendor_id"
 end
