@@ -5,5 +5,9 @@ module Ordering
     identifier :id
 
     fields :product_id, :name, :description, :price, :quantity, :total_price
+
+    field :available do |item, _|
+      item.product.available?
+    end
   end
 end

@@ -29,9 +29,9 @@ module Ordering
       customer.present? && customer == self.customer
     end
 
-    # @return [Money]
+    # @return [Hash{String => Integer}]
     def subtotals
-      items.group_by(&:currency).transform_values { |items| items.sum(0, &:total_price) }
+      items.group(:currency).sum(:price_cents)
     end
 
     # @return [Boolean]

@@ -43,5 +43,10 @@ module Catalog
     # @!method owned_by?(owner)
     #   @return [Boolean]
     delegate :owned_by?, to: :vendor, allow_nil: true
+
+    # @return [Boolean]
+    def available?
+      active? && vendor.active?
+    end
   end
 end

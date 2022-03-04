@@ -6,6 +6,8 @@ module Ordering
 
     fields :subtotals
 
-    association :items, blueprint: Ordering::CartItemBlueprint
+    association :items, blueprint: Ordering::CartItemBlueprint do |cart, _|
+      cart.items.preload(product: :vendor).order(:id)
+    end
   end
 end

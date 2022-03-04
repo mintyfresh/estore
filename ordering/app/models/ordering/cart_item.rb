@@ -34,7 +34,7 @@ module Ordering
     validates :quantity, numericality: { greater_than: 0 }
 
     validate on: :create, if: :product do
-      errors.add(:product, :unavailable) unless product.active? && product.vendor.active?
+      errors.add(:product, :unavailable) unless product.available?
     end
 
     monetize :price_cents, with_model_currency: :currency, allow_nil: true
