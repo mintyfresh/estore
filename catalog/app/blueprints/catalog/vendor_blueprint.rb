@@ -4,7 +4,7 @@ module Catalog
   class VendorBlueprint < ApplicationBlueprint
     identifier :id
 
-    fields :name, :description
+    fields :name, :description, :active
 
     view :detail do
       association :products, blueprint: ProductBlueprint do |vendor, _|

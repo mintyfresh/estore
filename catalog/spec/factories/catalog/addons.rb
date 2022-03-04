@@ -8,8 +8,7 @@
 #  product_id        :bigint           not null
 #  name              :citext           not null
 #  description       :string
-#  extra_price_cents :integer
-#  currency          :string
+#  extra_price_cents :integer          not null
 #  created_at        :datetime         not null
 #  updated_at        :datetime         not null
 #
@@ -27,7 +26,6 @@ FactoryBot.define do
 
     sequence(:name) { |n| "#{Faker::Commerce.product_name} #{n}" }
     description { Faker::Hipster.sentence }
-    currency { Catalog.supported_currencies.sample }
     extra_price { Faker::Commerce.price }
   end
 end

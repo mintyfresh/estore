@@ -8,8 +8,7 @@
 #  product_id        :bigint           not null
 #  name              :citext           not null
 #  description       :string
-#  extra_price_cents :integer
-#  currency          :string
+#  extra_price_cents :integer          not null
 #  created_at        :datetime         not null
 #  updated_at        :datetime         not null
 #
@@ -27,8 +26,11 @@ module Catalog
 
     validates :name, length: { maximum: 50 }, presence: true, uniqueness: { scope: :product }
     validates :description, length: { maximum: 1000 }
-    validates :currency, inclusion: { in: Catalog.supported_currencies }
 
     monetize :extra_price_cents, with_model_currency: :currency, numericality: { greater_than_or_equal_to: 0 }
+
+    # @!method currency
+    #   @return [String]
+    delegate :currency, to: :product, allow_nil: true
   end
 end

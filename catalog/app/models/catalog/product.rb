@@ -12,6 +12,7 @@
 #  currency    :string           not null
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
+#  active      :boolean          default(FALSE), not null
 #
 # Indexes
 #
@@ -35,5 +36,12 @@ module Catalog
     validates :addons, length: { maximum: 25 }
 
     monetize :price_cents, with_model_currency: :currency, numericality: { greater_than_or_equal_to: 0 }
+
+    scope :active, -> { where(active: true) }
+    scope :owned_by, -> (owner) { joins(:vendor).merge(Vendor.owned_by(owner)) }
+
+    # @!method owned_by?(owner)
+    #   @return [Boolean]
+    delegate :owned_by?, to: :vendor, allow_nil: true
   end
 end

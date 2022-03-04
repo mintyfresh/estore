@@ -4,7 +4,7 @@ module Catalog
   class ProductBlueprint < ApplicationBlueprint
     identifier :id
 
-    fields :name, :description, :price
+    fields :name, :description, :price, :active
 
     view :detail do
       association :addons, blueprint: AddonBlueprint do |product, _|

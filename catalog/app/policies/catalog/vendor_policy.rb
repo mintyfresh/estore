@@ -9,28 +9,29 @@ module Catalog
     end
 
     def show?
-      true
+      vendor.active? || vendor.owned_by?(owner)
     end
 
     def create?
-      owner.present?
+      vendor.owned_by?(owner)
     end
 
     def update?
-      owner.present? && owner == vendor.owner
+      vendor.owned_by?(owner)
     end
 
     def destroy?
-      owner.present? && owner == vendor.owner
+      vendor.owned_by?(owner)
     end
 
     def permitted_attributes
-      %i[name description]
+      %i[name description active]
     end
 
     class Scope < Scope
       def resolve
-        scope.all
+        scope.active
+          .or(scope.owned_by(owner))
       end
     end
   end

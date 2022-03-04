@@ -8,8 +8,7 @@
 #  product_id        :bigint           not null
 #  name              :citext           not null
 #  description       :string
-#  extra_price_cents :integer
-#  currency          :string
+#  extra_price_cents :integer          not null
 #  created_at        :datetime         not null
 #  updated_at        :datetime         not null
 #
@@ -68,16 +67,6 @@ module Catalog
 
     it 'is invalid with an extra price less than 0' do
       addon.extra_price_cents = -1
-      expect(addon).to be_invalid
-    end
-
-    it 'is invalid without a currency' do
-      addon.currency = nil
-      expect(addon).to be_invalid
-    end
-
-    it 'is invalid with a currency that is not in the list of supported currencies' do
-      addon.currency = 'a'
       expect(addon).to be_invalid
     end
   end

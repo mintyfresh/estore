@@ -9,28 +9,30 @@ module Catalog
     end
 
     def show?
-      true
+      (product.active? && product.vendor.active?) || product.owned_by?(owner)
     end
 
     def create?
-      owner.present? && owner == product.vendor.owner
+      product.owned_by?(owner)
     end
 
     def update?
-      owner.present? && owner == product.vendor.owner
+      product.owned_by?(owner)
     end
 
     def destroy?
-      owner.present? && owner == product.vendor.owner
+      product.owned_by?(owner)
     end
 
     def permitted_attributes
-      [:name, :description, :price, :currency, { addons_attributes: %i[id name description extra_price _destroy] }]
+      [:name, :description, :price, :currency, :active,
+       { addons_attributes: %i[id name description extra_price _destroy] }]
     end
 
     class Scope < Scope
       def resolve
-        scope.all
+        scope.active.joins(:vendor).merge(Vendor.active)
+          .or(scope.owned_by(owner))
       end
     end
   end

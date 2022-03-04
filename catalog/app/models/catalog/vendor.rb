@@ -10,6 +10,7 @@
 #  description :string
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
+#  active      :boolean          default(FALSE), not null
 #
 # Indexes
 #
@@ -24,5 +25,12 @@ module Catalog
 
     validates :name, length: { maximum: 50 }, presence: true, uniqueness: true
     validates :description, length: { maximum: 1000 }
+
+    scope :active, -> { where(active: true) }
+    scope :owned_by, -> (owner) { where(owner: owner) }
+
+    def owned_by?(owner)
+      owner.present? && owner == self.owner
+    end
   end
 end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_03_04_163002) do
+ActiveRecord::Schema[7.0].define(version: 2022_03_04_185011) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "plpgsql"
@@ -20,7 +20,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_03_04_163002) do
     t.citext "name", null: false
     t.string "description"
     t.integer "extra_price_cents", null: false
-    t.string "currency", null: false
     t.datetime "created_at", default: -> { "now()" }, null: false
     t.datetime "updated_at", default: -> { "now()" }, null: false
     t.index ["product_id"], name: "index_catalog_addons_on_product_id"
@@ -35,6 +34,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_03_04_163002) do
     t.string "currency", null: false
     t.datetime "created_at", default: -> { "now()" }, null: false
     t.datetime "updated_at", default: -> { "now()" }, null: false
+    t.boolean "active", default: false, null: false
     t.index ["vendor_id"], name: "index_catalog_products_on_vendor_id"
     t.check_constraint "price_cents >= 0"
   end
@@ -45,6 +45,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_03_04_163002) do
     t.string "description"
     t.datetime "created_at", default: -> { "now()" }, null: false
     t.datetime "updated_at", default: -> { "now()" }, null: false
+    t.boolean "active", default: false, null: false
     t.index ["name"], name: "index_catalog_vendors_on_name", unique: true
     t.index ["owner_id"], name: "index_catalog_vendors_on_owner_id"
   end
