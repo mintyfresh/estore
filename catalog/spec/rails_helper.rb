@@ -13,12 +13,14 @@ require 'rspec/rails'
 
 # Checks for pending migrations and applies them before tests are run.
 # If you are not using ActiveRecord, you can remove these lines.
-begin
-  ActiveRecord::Migration.maintain_test_schema!
-rescue ActiveRecord::PendingMigrationError => error
-  puts error.to_s.strip
-  exit 1
-end
+# NOTE: Does not work as expected with dummy apps for engines.
+# See: https://stackoverflow.com/questions/44233207/test-migrations-are-not-running-with-my-rails-engine-even-though-maintain-test
+# begin
+#   ActiveRecord::Migration.maintain_test_schema!
+# rescue ActiveRecord::PendingMigrationError => error
+#   puts error.to_s.strip
+#   exit 1
+# end
 
 RSpec.configure do |config|
   config.include ActiveSupport::Testing::TimeHelpers
