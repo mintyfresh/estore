@@ -22,6 +22,11 @@ FactoryBot.define do
     owner { build(Catalog.owner_class.underscore) }
     sequence(:name) { |n| "#{Faker::Company.name} #{n}" }
     description { Faker::Hipster.sentence }
+    active { true }
+
+    trait :inactive do
+      active { false }
+    end
 
     trait :with_products do
       transient do

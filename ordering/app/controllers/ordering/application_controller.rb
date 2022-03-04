@@ -2,7 +2,11 @@
 
 module Ordering
   class ApplicationController < Ordering.controller_base_class.safe_constantize
-    include Pundit
+    include Pundit::Authorization
+
+    def pundit_user
+      current_customer
+    end
 
     # @return [Customer, nil]
     def current_customer
@@ -15,7 +19,7 @@ module Ordering
 
     # @return [Cart, nil]
     def current_cart
-      @current_cart ||= current_customer && Cart.create_or_find_by!(customer: current_customer)
+      @current_cart ||= current_customer && Cart.find_or_create_by!(customer: current_customer)
     end
   end
 end

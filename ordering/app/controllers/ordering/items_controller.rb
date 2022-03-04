@@ -15,7 +15,7 @@ module Ordering
       authorize(@item)
 
       if @item.save
-        render json: @item, status: :created
+        render json: CartBlueprint.render_as_json(current_cart)
       else
         render json: @item.errors, status: :unprocessable_entity
       end
@@ -23,7 +23,7 @@ module Ordering
 
     def update
       if @item.update(permitted_attributes(CartItem))
-        render json: @item
+        render json: CartBlueprint.render_as_json(current_cart)
       else
         render json: @item.errors, status: :unprocessable_entity
       end
@@ -31,7 +31,7 @@ module Ordering
 
     def destroy
       if @item.destroy
-        head :ok
+        render json: CartBlueprint.render_as_json(current_cart)
       else
         render json: @item.errors, status: :unprocessable_entity
       end

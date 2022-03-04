@@ -3,7 +3,7 @@
 module Ordering
   class CartsController < ApplicationController
     def show
-      render json: current_cart
+      render json: CartBlueprint.render_as_json(current_cart)
     end
 
     def clear

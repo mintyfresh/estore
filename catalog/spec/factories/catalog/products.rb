@@ -30,6 +30,11 @@ FactoryBot.define do
     description { Faker::Hipster.sentence }
     currency { Catalog.supported_currencies.sample }
     price { Faker::Commerce.price }
+    active { true }
+
+    trait :inactive do
+      active { false }
+    end
 
     trait :with_addons do
       transient do

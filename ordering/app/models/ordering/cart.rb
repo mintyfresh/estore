@@ -23,9 +23,15 @@ module Ordering
 
     has_many :items, class_name: 'Ordering::CartItem', dependent: :destroy, inverse_of: :cart
 
+    # @param customer [Customer]
+    # @return [Boolean]
+    def owned_by?(customer)
+      customer.present? && customer == self.customer
+    end
+
     # @return [Money]
-    def subtotal
-      items.sum(&:total_price)
+    def subtotals
+      items.group_by(&:currency).transform_values { |items| items.sum(0, &:total_price) }
     end
 
     # @return [Boolean]

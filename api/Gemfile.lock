@@ -12,6 +12,7 @@ PATH
   remote: ../ordering
   specs:
     ordering (0.1.0)
+      blueprinter
       catalog
       pundit
       rails (>= 7.0.2.2)

@@ -46,6 +46,16 @@ module Ordering
       expect(cart_item).to be_invalid
     end
 
+    it 'is invalid when the product is inactive' do
+      cart_item.product.active = false
+      expect(cart_item).to be_invalid
+    end
+
+    it 'is invalid when the vendor is inactive' do
+      cart_item.product.vendor.active = false
+      expect(cart_item).to be_invalid
+    end
+
     it 'is invalid without a quantity' do
       cart_item.quantity = nil
       expect(cart_item).to be_invalid

@@ -16,6 +16,7 @@ Gem::Specification.new do |spec|
     Dir['{app,config,db,lib}/**/*', 'MIT-LICENSE', 'Rakefile', 'README.md']
   end
 
+  spec.add_dependency 'blueprinter'
   spec.add_dependency 'catalog'
   spec.add_dependency 'pundit'
   spec.add_dependency 'rails', '>= 7.0.2.2'

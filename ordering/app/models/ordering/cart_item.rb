@@ -33,13 +33,22 @@ module Ordering
 
     validates :quantity, numericality: { greater_than: 0 }
 
-    monetize :price_cents, with_model_currency: :currency, validate: false
+    validate on: :create, if: :product do
+      errors.add(:product, :unavailable) unless product.active? && product.vendor.active?
+    end
+
+    monetize :price_cents, with_model_currency: :currency, allow_nil: true
 
     before_create do
       self.name        = product.name
       self.description = product.description
       self.price       = product.price
     end
+
+    # @!method owned_by?(customer)
+    #   @param customer [Customer]
+    #   @return [Boolean]
+    delegate :owned_by?, to: :cart, allow_nil: true
 
     # @return [Money]
     def total_price
