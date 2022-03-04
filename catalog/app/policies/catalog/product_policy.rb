@@ -13,7 +13,7 @@ module Catalog
     end
 
     def create?
-      owner.present?
+      owner.present? && owner == product.vendor.owner
     end
 
     def update?

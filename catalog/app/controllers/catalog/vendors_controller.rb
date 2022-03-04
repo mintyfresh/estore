@@ -4,6 +4,7 @@ module Catalog
   class VendorsController < ApplicationController
     before_action only: %i[show update destroy] do
       @vendor = Vendor.find(params[:id])
+      authorize(@vendor)
     end
 
     def index
@@ -13,14 +14,13 @@ module Catalog
     end
 
     def show
-      authorize(@vendor)
-
       render json: VendorBlueprint.render_as_json(@vendor, view: :detail)
     end
 
     def create
-      @vendor = authorize(Vendor).new(permitted_attributes(Vendor))
+      @vendor = Vendor.new(permitted_attributes(Vendor))
       @vendor.owner = current_owner
+      authorize(@vendor)
 
       if @vendor.save
         render json: VendorBlueprint.render_as_json(@vendor, view: :detail), status: :created
@@ -30,8 +30,6 @@ module Catalog
     end
 
     def update
-      authorize(@vendor)
-
       if @vendor.update(permitted_attributes(@vendor))
         render json: VendorBlueprint.render_as_json(@vendor, view: :detail)
       else
@@ -40,8 +38,6 @@ module Catalog
     end
 
     def destroy
-      authorize(@vendor)
-
       if @vendor.destroy
         head :no_content
       else
