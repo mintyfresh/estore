@@ -7,8 +7,8 @@ module Catalog
     fields :name, :description, :active
 
     view :detail do
-      association :products, blueprint: ProductBlueprint do |vendor, _|
-        vendor.products.order(:name, :id).page(1)
+      association :products, blueprint: ProductBlueprint do |vendor, options|
+        Pundit.policy_scope(options[:owner], vendor.products).order(:name, :id).page(1)
       end
     end
   end

@@ -10,11 +10,11 @@ module Catalog
     def index
       @vendors = policy_scope(Vendor).order(:name)
 
-      render json: VendorBlueprint.render_as_json(@vendors)
+      render json: render_as_json(@vendors)
     end
 
     def show
-      render json: VendorBlueprint.render_as_json(@vendor, view: :detail)
+      render json: render_as_json(@vendor, view: :detail)
     end
 
     def create
@@ -23,7 +23,7 @@ module Catalog
       authorize(@vendor)
 
       if @vendor.save
-        render json: VendorBlueprint.render_as_json(@vendor, view: :detail), status: :created
+        render json: render_as_json(@vendor, view: :detail), status: :created
       else
         render json: @vendor.errors, status: :unprocessable_entity
       end
@@ -31,7 +31,7 @@ module Catalog
 
     def update
       if @vendor.update(permitted_attributes(@vendor))
-        render json: VendorBlueprint.render_as_json(@vendor, view: :detail)
+        render json: render_as_json(@vendor, view: :detail)
       else
         render json: @vendor.errors, status: :unprocessable_entity
       end
