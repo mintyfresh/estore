@@ -21,5 +21,15 @@ FactoryBot.define do
     owner { build(Catalog.owner_class.underscore) }
     sequence(:name) { |n| "#{Faker::Company.name} #{n}" }
     description { Faker::Hipster.sentence }
+
+    trait :with_products do
+      transient do
+        products_count { 3 }
+      end
+
+      after(:build) do |vendor, e|
+        vendor.products = build_list(:product, e.products_count, vendor: vendor)
+      end
+    end
   end
 end

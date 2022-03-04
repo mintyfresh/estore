@@ -29,5 +29,15 @@ FactoryBot.define do
     description { Faker::Hipster.sentence }
     currency { Catalog.supported_currencies.sample }
     price { Faker::Commerce.price }
+
+    trait :with_addons do
+      transient do
+        addons_count { 3 }
+      end
+
+      after(:build) do |product, e|
+        product.addons = build_list(:addon, e.addons_count, product: product)
+      end
+    end
   end
 end
