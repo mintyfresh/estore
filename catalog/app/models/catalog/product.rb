@@ -27,9 +27,12 @@ module Catalog
 
     has_many :addons, class_name: 'Catalog::Addon', inverse_of: :product, dependent: :destroy
 
+    accepts_nested_attributes_for :addons, allow_destroy: true, reject_if: :all_blank
+
     validates :name, length: { maximum: 100 }, presence: true
     validates :description, length: { maximum: 1000 }
     validates :currency, inclusion: { in: Catalog.supported_currencies }
+    validates :addons, length: { maximum: 25 }
 
     monetize :price_cents, with_model_currency: :currency, numericality: { greater_than_or_equal_to: 0 }
   end

@@ -20,6 +20,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'blueprinter'
   spec.add_dependency 'kaminari-activerecord'
   spec.add_dependency 'money-rails'
+  spec.add_dependency 'pundit'
   spec.add_dependency 'rails', '>= 7.0.2.2'
 
   spec.add_development_dependency 'factory_bot_rails'
