@@ -23,13 +23,13 @@
 #
 module Catalog
   class Product < ApplicationRecord
-    SUPPORTED_CURRENCIES = %w[CAD USD EUR].freeze
-
     belongs_to :vendor, class_name: 'Catalog::Vendor', inverse_of: :products
+
+    has_many :addons, class_name: 'Catalog::Addon', inverse_of: :product, dependent: :destroy
 
     validates :name, length: { maximum: 100 }, presence: true
     validates :description, length: { maximum: 1000 }
-    validates :currency, inclusion: { in: SUPPORTED_CURRENCIES }
+    validates :currency, inclusion: { in: Catalog.supported_currencies }
 
     monetize :price_cents, with_model_currency: :currency, numericality: { greater_than_or_equal_to: 0 }
   end

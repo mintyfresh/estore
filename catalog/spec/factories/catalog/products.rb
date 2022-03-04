@@ -27,7 +27,7 @@ FactoryBot.define do
 
     name { Faker::Commerce.product_name }
     description { Faker::Hipster.sentence }
-    currency { Catalog::Product::SUPPORTED_CURRENCIES.sample }
+    currency { Catalog.supported_currencies.sample }
     price { Faker::Commerce.price }
   end
 end
