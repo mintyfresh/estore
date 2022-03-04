@@ -19,7 +19,7 @@ module Catalog
 
     def create
       @vendor = Vendor.new(permitted_attributes(Vendor))
-      @vendor.owner = current_owner
+      @vendor.owner = catalog_owner
       authorize(@vendor)
 
       if @vendor.save
