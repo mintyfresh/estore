@@ -5,5 +5,11 @@ module Catalog
     identifier :id
 
     fields :name, :description
+
+    view :detail do
+      association :products, blueprint: ProductBlueprint do |vendor, _|
+        vendor.products.order(:name, :id).page(1)
+      end
+    end
   end
 end

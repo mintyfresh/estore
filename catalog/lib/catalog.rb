@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'blueprinter'
+require 'kaminari/activerecord'
 
 require 'catalog/version'
 require 'catalog/engine'

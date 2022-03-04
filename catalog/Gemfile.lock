@@ -3,6 +3,7 @@ PATH
   specs:
     catalog (0.1.0)
       blueprinter
+      kaminari-activerecord
       money-rails
       rails (>= 7.0.2.2)
 
@@ -97,6 +98,10 @@ GEM
     i18n (1.10.0)
       concurrent-ruby (~> 1.0)
     io-wait (0.2.1)
+    kaminari-activerecord (1.2.2)
+      activerecord
+      kaminari-core (= 1.2.2)
+    kaminari-core (1.2.2)
     loofah (2.14.0)
       crass (~> 1.0.2)
       nokogiri (>= 1.5.9)
