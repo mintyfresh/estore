@@ -33,3 +33,4 @@ group :test do
 end
 
 gem 'catalog', path: '../catalog'
+gem 'ordering', path: '../ordering'

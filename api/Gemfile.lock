@@ -8,6 +8,14 @@ PATH
       pundit
       rails (>= 7.0.2.2)
 
+PATH
+  remote: ../ordering
+  specs:
+    ordering (0.1.0)
+      catalog
+      pundit
+      rails (>= 7.0.2.2)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -256,6 +264,7 @@ DEPENDENCIES
   factory_bot_rails
   faker
   money-rails
+  ordering!
   pg (~> 1.1)
   puma (~> 5.0)
   rails (~> 7.0.2, >= 7.0.2.2)
