@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_03_04_203754) do
+ActiveRecord::Schema[7.0].define(version: 2022_03_04_211928) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "plpgsql"
@@ -84,6 +84,15 @@ ActiveRecord::Schema[7.0].define(version: 2022_03_04_203754) do
     t.index ["user_id"], name: "index_ordering_customers_on_user_id", unique: true
   end
 
+  create_table "sessions", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.datetime "expires_at", precision: nil, null: false
+    t.datetime "revoked_at", precision: nil
+    t.datetime "created_at", default: -> { "now()" }, null: false
+    t.datetime "updated_at", default: -> { "now()" }, null: false
+    t.index ["user_id"], name: "index_sessions_on_user_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.citext "email", null: false
     t.string "first_name", null: false
@@ -100,4 +109,5 @@ ActiveRecord::Schema[7.0].define(version: 2022_03_04_203754) do
   add_foreign_key "ordering_cart_items", "ordering_carts", column: "cart_id"
   add_foreign_key "ordering_carts", "ordering_customers", column: "customer_id"
   add_foreign_key "ordering_customers", "users"
+  add_foreign_key "sessions", "users"
 end

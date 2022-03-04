@@ -17,6 +17,8 @@
 #  index_users_on_email  (email) UNIQUE
 #
 class User < ApplicationRecord
+  has_many :sessions, dependent: :destroy, inverse_of: :user
+
   validates :email, presence: true, uniqueness: true
   validates :first_name, :last_name, length: { maximum: 50 }, presence: true
 
