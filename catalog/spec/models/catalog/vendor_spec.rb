@@ -25,5 +25,35 @@ module Catalog
     it 'has a valid factory' do
       expect(vendor).to be_valid
     end
+
+    it 'is invalid without an owner' do
+      vendor.owner = nil
+      expect(vendor).to be_invalid
+    end
+
+    it 'is invalid without a name' do
+      vendor.name = nil
+      expect(vendor).to be_invalid
+    end
+
+    it 'is invalid with a duplicate name' do
+      create(:vendor, name: vendor.name)
+      expect(vendor).to be_invalid
+    end
+
+    it 'is invalid with a name longer than 50 characters' do
+      vendor.name = 'a' * 51
+      expect(vendor).to be_invalid
+    end
+
+    it 'is valid without a description' do
+      vendor.description = nil
+      expect(vendor).to be_valid
+    end
+
+    it 'is invalid with a description longer than 1000 characters' do
+      vendor.description = 'a' * 1001
+      expect(vendor).to be_invalid
+    end
   end
 end

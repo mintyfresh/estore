@@ -20,7 +20,7 @@ module Catalog
   class Vendor < ApplicationRecord
     belongs_to :owner, class_name: Catalog.owner_class # rubocop:disable Rails/ReflectionClassName
 
-    validates :name, presence: true, uniqueness: true
+    validates :name, length: { maximum: 50 }, presence: true, uniqueness: true
     validates :description, length: { maximum: 1000 }
   end
 end

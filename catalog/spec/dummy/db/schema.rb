@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_03_04_154242) do
+ActiveRecord::Schema[7.0].define(version: 2022_03_04_155041) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "plpgsql"
@@ -23,6 +23,12 @@ ActiveRecord::Schema[7.0].define(version: 2022_03_04_154242) do
     t.datetime "updated_at", default: -> { "now()" }, null: false
     t.index ["name"], name: "index_catalog_vendors_on_name", unique: true
     t.index ["owner_id"], name: "index_catalog_vendors_on_owner_id"
+  end
+
+  create_table "mock_users", force: :cascade do |t|
+    t.string "name", null: false
+    t.datetime "created_at", default: -> { "now()" }, null: false
+    t.datetime "updated_at", default: -> { "now()" }, null: false
   end
 
 end
