@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'blueprinter'
+
 require 'catalog/version'
 require 'catalog/engine'
 
