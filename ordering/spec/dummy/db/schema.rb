@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_03_06_011028) do
+ActiveRecord::Schema[7.0].define(version: 2022_03_06_013759) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "plpgsql"
@@ -90,6 +90,23 @@ ActiveRecord::Schema[7.0].define(version: 2022_03_06_011028) do
     t.index ["user_id"], name: "index_ordering_customers_on_user_id", unique: true
   end
 
+  create_table "ordering_order_items", force: :cascade do |t|
+    t.bigint "purchase_order_id", null: false
+    t.bigint "product_id", null: false
+    t.string "name", null: false
+    t.string "description"
+    t.integer "price_cents", null: false
+    t.string "currency", null: false
+    t.integer "quantity", null: false
+    t.datetime "created_at", default: -> { "now()" }, null: false
+    t.datetime "updated_at", default: -> { "now()" }, null: false
+    t.index ["product_id"], name: "index_ordering_order_items_on_product_id"
+    t.index ["purchase_order_id", "product_id"], name: "index_ordering_order_items_on_purchase_order_id_and_product_id", unique: true
+    t.index ["purchase_order_id"], name: "index_ordering_order_items_on_purchase_order_id"
+    t.check_constraint "price_cents >= 0"
+    t.check_constraint "quantity > 0"
+  end
+
   create_table "ordering_purchase_orders", force: :cascade do |t|
     t.bigint "sales_order_id", null: false
     t.bigint "vendor_id", null: false
@@ -115,6 +132,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_03_06_011028) do
   add_foreign_key "ordering_cart_items", "ordering_carts", column: "cart_id"
   add_foreign_key "ordering_carts", "ordering_customers", column: "customer_id"
   add_foreign_key "ordering_customers", "mock_users", column: "user_id"
+  add_foreign_key "ordering_order_items", "catalog_products", column: "product_id"
+  add_foreign_key "ordering_order_items", "ordering_purchase_orders", column: "purchase_order_id"
   add_foreign_key "ordering_purchase_orders", "catalog_vendors", column: "vendor_id"
   add_foreign_key "ordering_purchase_orders", "ordering_sales_orders", column: "sales_order_id"
   add_foreign_key "ordering_sales_orders", "ordering_customers", column: "customer_id"

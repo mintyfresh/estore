@@ -29,8 +29,11 @@ module Ordering
     belongs_to :sales_order, class_name: 'Ordering::SalesOrder', inverse_of: :purchase_orders
     belongs_to :vendor, class_name: 'Catalog::Vendor', inverse_of: :purchase_orders
 
+    has_many :order_items, class_name: 'Ordering::OrderItem',
+             dependent: :restrict_with_error, inverse_of: :purchase_order
+
     enum :status, STATUSES.index_with(&:itself)
 
-    validates :status, presence: true
+    validates :status, :order_items, presence: true
   end
 end

@@ -46,5 +46,10 @@ module Ordering
       purchase_order.status = nil
       expect(purchase_order).to be_invalid
     end
+
+    it 'is invalid without order items' do
+      purchase_order.order_items = []
+      expect(purchase_order).to be_invalid
+    end
   end
 end

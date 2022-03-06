@@ -28,5 +28,13 @@ FactoryBot.define do
     association :vendor, strategy: :build
 
     status { 'submitted' }
+
+    transient do
+      order_items_count { 3 }
+    end
+
+    after(:build) do |purchase_order, e|
+      purchase_order.order_items = build_list(:order_item, e.order_items_count, purchase_order: purchase_order)
+    end
   end
 end
