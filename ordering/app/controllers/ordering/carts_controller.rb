@@ -8,7 +8,7 @@ module Ordering
 
     def clear
       if current_cart.clear
-        head :ok
+        render json: CartBlueprint.render_as_json(current_cart)
       else
         render json: current_cart.errors, status: :unprocessable_entity
       end
