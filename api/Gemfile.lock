@@ -14,6 +14,7 @@ PATH
     ordering (0.1.0)
       blueprinter
       catalog
+      decorators
       pundit
       rails (>= 7.0.2.2)
 
@@ -100,6 +101,8 @@ GEM
     debug (1.4.0)
       irb (>= 1.3.6)
       reline (>= 0.2.7)
+    decorators (1.0.5)
+      railties (>= 3.0.19)
     diff-lcs (1.5.0)
     digest (3.1.0)
     erubi (1.10.0)

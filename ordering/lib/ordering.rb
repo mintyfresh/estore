@@ -1,8 +1,5 @@
 # frozen_string_literal: true
 
-require 'catalog'
-require 'pundit'
-
 require 'ordering/version'
 require 'ordering/engine'
 

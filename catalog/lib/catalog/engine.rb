@@ -1,5 +1,10 @@
 # frozen_string_literal: true
 
+require 'blueprinter'
+require 'decorators'
+require 'kaminari/activerecord'
+require 'pundit'
+
 begin
   require 'factory_bot_rails'
 rescue LoadError
@@ -19,6 +24,10 @@ module Catalog
 
     if config.respond_to?(:factory_bot)
       config.factory_bot.definition_file_paths << File.expand_path('../../spec/factories', __dir__)
+    end
+
+    initializer 'catalog.load_decorators' do
+      Decorators.register!(Engine.root)
     end
   end
 end

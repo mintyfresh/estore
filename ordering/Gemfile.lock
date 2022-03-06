@@ -3,6 +3,7 @@ PATH
   specs:
     catalog (0.1.0)
       blueprinter
+      decorators
       kaminari-activerecord
       money-rails
       pundit
@@ -14,6 +15,7 @@ PATH
     ordering (0.1.0)
       blueprinter
       catalog
+      decorators
       pundit
       rails (>= 7.0.2.2)
 
@@ -93,6 +95,8 @@ GEM
     builder (3.2.4)
     concurrent-ruby (1.1.9)
     crass (1.0.6)
+    decorators (1.0.5)
+      railties (>= 3.0.19)
     diff-lcs (1.5.0)
     digest (3.1.0)
     erubi (1.10.0)

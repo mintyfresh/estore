@@ -1,5 +1,9 @@
 # frozen_string_literal: true
 
+require 'catalog'
+require 'decorators'
+require 'pundit'
+
 begin
   require 'factory_bot_rails'
 rescue LoadError
@@ -19,6 +23,10 @@ module Ordering
 
     if config.respond_to?(:factory_bot)
       config.factory_bot.definition_file_paths << File.expand_path('../../spec/factories', __dir__)
+    end
+
+    initializer 'ordering.load_decorators' do
+      Decorators.register!(Engine.root)
     end
   end
 end
