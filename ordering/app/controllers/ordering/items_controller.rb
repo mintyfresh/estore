@@ -2,6 +2,10 @@
 
 module Ordering
   class ItemsController < ApplicationController
+    before_action do
+      authorize(current_cart)
+    end
+
     before_action only: %i[update destroy] do
       @item = current_cart.items.find(params[:id])
       authorize(@item)

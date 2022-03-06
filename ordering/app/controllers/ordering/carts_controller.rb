@@ -2,6 +2,10 @@
 
 module Ordering
   class CartsController < ApplicationController
+    before_action do
+      authorize(current_cart)
+    end
+
     def show
       render json: CartBlueprint.render_as_json(current_cart)
     end
