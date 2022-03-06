@@ -23,7 +23,7 @@ require 'rails_helper'
 module Ordering
   RSpec.describe SalesOrder, type: :model do
     subject(:sales_order) { build(:sales_order) }
-  
+
     it 'has a valid factory' do
       expect(sales_order).to be_valid
     end
@@ -35,6 +35,11 @@ module Ordering
 
     it 'is invalid without a status' do
       sales_order.status = nil
+      expect(sales_order).to be_invalid
+    end
+
+    it 'is invalid without purchase orders' do
+      sales_order.purchase_orders = []
       expect(sales_order).to be_invalid
     end
   end

@@ -22,5 +22,13 @@ FactoryBot.define do
   factory :sales_order, class: 'Ordering::SalesOrder' do
     association :customer, strategy: :build
     status { 'submitted' }
+
+    transient do
+      purchase_orders_count { 3 }
+    end
+
+    after(:build) do |sales_order, e|
+      sales_order.purchase_orders = build_list(:purchase_order, e.purchase_orders_count, sales_order: sales_order)
+    end
   end
 end

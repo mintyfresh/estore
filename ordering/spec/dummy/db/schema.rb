@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_03_06_010546) do
+ActiveRecord::Schema[7.0].define(version: 2022_03_06_011028) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "plpgsql"
@@ -90,6 +90,17 @@ ActiveRecord::Schema[7.0].define(version: 2022_03_06_010546) do
     t.index ["user_id"], name: "index_ordering_customers_on_user_id", unique: true
   end
 
+  create_table "ordering_purchase_orders", force: :cascade do |t|
+    t.bigint "sales_order_id", null: false
+    t.bigint "vendor_id", null: false
+    t.string "status", null: false
+    t.datetime "created_at", default: -> { "now()" }, null: false
+    t.datetime "updated_at", default: -> { "now()" }, null: false
+    t.index ["sales_order_id", "vendor_id"], name: "index_ordering_purchase_orders_on_sales_order_id_and_vendor_id", unique: true
+    t.index ["sales_order_id"], name: "index_ordering_purchase_orders_on_sales_order_id"
+    t.index ["vendor_id"], name: "index_ordering_purchase_orders_on_vendor_id"
+  end
+
   create_table "ordering_sales_orders", force: :cascade do |t|
     t.bigint "customer_id", null: false
     t.string "status", null: false
@@ -104,5 +115,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_03_06_010546) do
   add_foreign_key "ordering_cart_items", "ordering_carts", column: "cart_id"
   add_foreign_key "ordering_carts", "ordering_customers", column: "customer_id"
   add_foreign_key "ordering_customers", "mock_users", column: "user_id"
+  add_foreign_key "ordering_purchase_orders", "catalog_vendors", column: "vendor_id"
+  add_foreign_key "ordering_purchase_orders", "ordering_sales_orders", column: "sales_order_id"
   add_foreign_key "ordering_sales_orders", "ordering_customers", column: "customer_id"
 end
