@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_03_04_195535) do
+ActiveRecord::Schema[7.0].define(version: 2022_03_06_010546) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "plpgsql"
@@ -90,10 +90,19 @@ ActiveRecord::Schema[7.0].define(version: 2022_03_04_195535) do
     t.index ["user_id"], name: "index_ordering_customers_on_user_id", unique: true
   end
 
+  create_table "ordering_sales_orders", force: :cascade do |t|
+    t.bigint "customer_id", null: false
+    t.string "status", null: false
+    t.datetime "created_at", default: -> { "now()" }, null: false
+    t.datetime "updated_at", default: -> { "now()" }, null: false
+    t.index ["customer_id"], name: "index_ordering_sales_orders_on_customer_id"
+  end
+
   add_foreign_key "catalog_addons", "catalog_products", column: "product_id"
   add_foreign_key "catalog_products", "catalog_vendors", column: "vendor_id"
   add_foreign_key "ordering_cart_items", "catalog_products", column: "product_id"
   add_foreign_key "ordering_cart_items", "ordering_carts", column: "cart_id"
   add_foreign_key "ordering_carts", "ordering_customers", column: "customer_id"
   add_foreign_key "ordering_customers", "mock_users", column: "user_id"
+  add_foreign_key "ordering_sales_orders", "ordering_customers", column: "customer_id"
 end

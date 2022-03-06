@@ -25,5 +25,7 @@ module Ordering
     belongs_to :user, class_name: Ordering.user_class # rubocop:disable Rails/ReflectionClassName
 
     has_one :cart, class_name: 'Ordering::Cart', dependent: :destroy, inverse_of: :customer
+
+    has_many :sales_orders, class_name: 'Ordering::SalesOrder', dependent: :restrict_with_error, inverse_of: :customer
   end
 end
